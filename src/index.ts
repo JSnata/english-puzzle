@@ -1,1 +1,2 @@
-console.log('hey');
+import './global.css';
+import './normalize.css';

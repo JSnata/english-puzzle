@@ -1,0 +1,24 @@
+:root {
+    --bg-color: #fafafa;
+    --border-color: #717171;
+    --text-color: #000000;
+    --text-color-secondary: #4a4a4a;
+    --primary-color: #1d2443;
+    --primary-color-hover: #2d386b;
+    --primary-color-active: #4557a7;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    box-sizing: border-box;
+}
