@@ -16,6 +16,10 @@
         "type": "git",
         "url": ""
     },
+    "validate-branch-name": {
+        "pattern": "^(feat|refactor|chore|fix|init)\\/RSS-PZ-\\d+_[\\w-]+$",
+        "errorMsg": "your own error message"
+    },
     "keywords": [],
     "author": "jsnata",
     "license": "ISC",
