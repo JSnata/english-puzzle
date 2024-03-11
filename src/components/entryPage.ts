@@ -64,11 +64,8 @@ const loginFormHandler = (e: Event) => {
 };
 
 export const renderEntryForm = () => {
-  const mainContainer = document.querySelector('.main-container');
-  const formContainer = renderElement('div', 'form-container', mainContainer as HTMLElement);
-  renderElement('h2', '', formContainer, {
-    innerText: 'RSS-PUZZLE',
-  });
+  const mainContainer = document.querySelector('.main-container') as HTMLElement;
+  const formContainer = renderElement('div', 'form-container', mainContainer);
   const loginForm = renderElement('form', '', formContainer);
 
   loginForm?.setAttribute('novalidate', 'true');

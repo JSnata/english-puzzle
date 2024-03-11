@@ -1,9 +1,11 @@
 import { initialRender } from '../initialRender';
-import { renderEntryForm } from '../entryPage';
+// import { renderEntryForm } from '../entryPage';
+import { renderStartPage } from '../startPage';
 
 const App = () => {
   initialRender();
-  renderEntryForm();
+  // renderEntryForm();
+  renderStartPage();
 };
 
 export default App;
