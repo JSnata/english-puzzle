@@ -58,7 +58,8 @@ const loginFormHandler = (e: Event) => {
   const surnameValid = validateLoginForm('Surname', surnameInput, surnameError);
 
   if (firstNameValid && surnameValid) {
-    console.log('Valid!');
+    localStorage.setItem('firstName', firstNameInput.value);
+    localStorage.setItem('surname', surnameInput.value);
   }
 };
 
