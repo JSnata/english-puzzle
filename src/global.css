@@ -1,24 +1,84 @@
 :root {
-    --bg-color: #fafafa;
-    --border-color: #717171;
-    --text-color: #000000;
-    --text-color-secondary: #4a4a4a;
-    --primary-color: #1d2443;
-    --primary-color-hover: #2d386b;
-    --primary-color-active: #4557a7;
+  --bg-color: #fafafa;
+  --border-color: #717171;
+  --text-color: #000000;
+  --text-color-secondary: #4a4a4a;
+  --primary-color: #b37525;
+  --primary-color-hover: #2d386b;
+  --primary-color-active: #4557a7;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 30px 0;
+  width: 100%;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.form-container {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 40px;
+  width: 400px;
+  text-align: center;
+}
+.container h2 {
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.form-container .label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--text-color-secondary);
+}
+.form-container .input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  outline: none;
+  margin-top: 5px;
+}
+.form-container .input:focus {
+  border-color: var(--primary-color);
+}
+.primary-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.primary-button:hover {
+  background-color: var(--primary-color-hover);
 }
