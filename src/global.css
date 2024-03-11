@@ -66,8 +66,16 @@ body {
   outline: none;
   margin-top: 5px;
 }
+.form-container .form-group .input.error {
+  border-color: red;
+}
 .form-container .input:focus {
   border-color: var(--primary-color);
+}
+.input-error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 .primary-button {
   background-color: var(--primary-color);
