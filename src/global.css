@@ -109,20 +109,19 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.421);
-  /* border-left: 5px solid var(--primary-color);
-  border-right: 5px solid var(--primary-color); */
   height: 100vh;
 }
 
 .page-wrapper .main-header {
   width: 100%;
+  background-color: rgba(255, 255, 255, 0.421);
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .page-wrapper .main-heading {
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 0;
+  margin: 0;
   font-family: 'Changa One', sans-serif;
   font-size: 46px;
   font-weight: 400;
@@ -143,7 +142,6 @@ body {
   font-size: 17px;
   color: var(--primary-color);
   font-weight: 500;
-  font-style: italic;
 }
 
 .game-description .list {
@@ -157,9 +155,26 @@ body {
   margin-bottom: 10px;
 }
 
+.greeting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.421);
+  padding: 30px 20px;
+  border-radius: 5px;
+}
+
+.greeting-container .primary-button {
+  width: 120px;
+  height: 50px;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
 .greeting-message {
+  margin-top: 0;
+  margin-bottom: 30px;
   font-size: 24px;
-  font-weight: bold;
   color: var(--primary-color);
   opacity: 0;
   transition: opacity 0.7s ease-in-out;

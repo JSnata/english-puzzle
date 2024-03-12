@@ -1,4 +1,9 @@
 import { renderElement } from './renderElement';
+import { renderGamePage } from './gamePage';
+
+const startGameHandler = () => {
+  renderGamePage();
+};
 
 export const renderStartPage = (userCredentials: { firstName: string; surname: string }) => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
@@ -21,6 +26,10 @@ export const renderStartPage = (userCredentials: { firstName: string; surname: s
       innerText: `Hey, ${userCredentials.firstName} ${userCredentials.surname}! Ready for learning?`,
     });
   }
-
   renderElement('div', '', mainContent);
+  const startGameButton = renderElement('button', 'primary-button', greetingContainer, {
+    innerText: 'Start',
+    type: 'button',
+  });
+  startGameButton?.addEventListener('click', () => startGameHandler());
 };

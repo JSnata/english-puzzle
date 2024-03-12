@@ -25,7 +25,7 @@ export const renderElement = (
       if (key === 'innerText') {
         element.innerText = attr[key];
 
-        return;
+        return element;
       }
 
       element.setAttribute(key, attr[key]);
