@@ -1,5 +1,6 @@
 import { renderElement } from './renderElement';
 import { renderGamePage } from './gamePage/gamePage';
+import { logout } from '../utils/localStorageUtils';
 
 const startGameHandler = () => {
   renderGamePage();
@@ -10,7 +11,7 @@ export const renderStartPage = (userCredentials: { firstName: string; surname: s
   const pageWrapper = renderElement('div', 'page-wrapper', mainContainer);
   const mainContent = renderElement('div', 'main-content', pageWrapper);
 
-  const mainHeader = renderElement('div', 'main-header', mainContent);
+  const mainHeader = renderElement('div', 'header', mainContent);
   renderElement('h1', 'main-heading', mainHeader, {
     innerText: 'RSS PUZZLE',
   });
@@ -32,4 +33,9 @@ export const renderStartPage = (userCredentials: { firstName: string; surname: s
     type: 'button',
   });
   startGameButton?.addEventListener('click', () => startGameHandler());
+  const logoutButton = renderElement('button', 'primary-button logout-button', greetingContainer, {
+    type: 'button',
+    innerText: 'Logout',
+  });
+  logoutButton.addEventListener('click', () => logout());
 };

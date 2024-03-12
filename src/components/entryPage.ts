@@ -67,7 +67,8 @@ const loginFormHandler = (e: Event) => {
 
 export const renderEntryForm = () => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
-  const formContainer = renderElement('div', 'form-container', mainContainer);
+  const entryPageContainer = renderElement('div', 'entry-page-container', mainContainer);
+  const formContainer = renderElement('div', 'form-container', entryPageContainer);
   const loginForm = renderElement('form', '', formContainer);
 
   loginForm?.setAttribute('novalidate', 'true');

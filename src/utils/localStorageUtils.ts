@@ -1,3 +1,5 @@
+import { initialRender } from '../components/initialRender';
+
 export const getUserCredentials = () => {
   const firstName = localStorage.getItem('firstName');
   const surname = localStorage.getItem('surname');
@@ -8,4 +10,10 @@ export const getUserCredentials = () => {
       surname,
     };
   }
+};
+
+export const logout = () => {
+  localStorage.removeItem('firstName');
+  localStorage.removeItem('surname');
+  initialRender();
 };
