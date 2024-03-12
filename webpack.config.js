@@ -11,6 +11,11 @@ const baseConfig = {
   module: {
     rules: [
       {
+        test: /\.json$/,
+        loader: 'json-loader',
+        type: 'javascript/auto',
+      },
+      {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },

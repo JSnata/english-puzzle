@@ -1,5 +1,5 @@
 import { renderElement } from './renderElement';
-import { renderGamePage } from './gamePage';
+import { renderGamePage } from './gamePage/gamePage';
 
 const startGameHandler = () => {
   renderGamePage();
