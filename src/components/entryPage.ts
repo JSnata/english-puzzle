@@ -1,3 +1,4 @@
+import { initialRender } from './initialRender';
 import { renderElement } from './renderElement';
 
 const validateLoginForm = (
@@ -61,6 +62,7 @@ const loginFormHandler = (e: Event) => {
     localStorage.setItem('firstName', firstNameInput.value);
     localStorage.setItem('surname', surnameInput.value);
   }
+  initialRender();
 };
 
 export const renderEntryForm = () => {
