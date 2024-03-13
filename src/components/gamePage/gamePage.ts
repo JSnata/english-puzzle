@@ -1,5 +1,4 @@
 import { logout } from './../../utils/localStorageUtils';
-import { renderResultField } from './resultField';
 import { renderWordCards } from './wordCards';
 import { renderElement } from '../renderElement';
 
@@ -14,6 +13,5 @@ export const renderGamePage = () => {
   logoutButton.addEventListener('click', () => logout());
 
   renderElement('div', 'game-container', mainContainer);
-  renderResultField();
   renderWordCards('1');
 };

@@ -121,7 +121,7 @@ body {
 
 .page-wrapper .header {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.421);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
   border-radius: 5px;
 }
@@ -166,7 +166,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.421);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 30px 20px;
   border-radius: 5px;
 }
@@ -220,7 +220,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-.words-container {
+.source-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -229,8 +229,10 @@ body {
 }
 
 .word-card {
-  display: inline-block;
-  margin: 5px;
+  display: inline-flex;
+  flex-grow: 1;
+  height: 40px;
+  margin: 0;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -244,10 +246,20 @@ body {
   background-color: #e0e0e0;
 }
 
+.word-card.empty {
+  min-width: 10px;
+}
+
+.source-container .word-card {
+  min-width: 50px;
+}
+
 .result-field {
+  display: flex;
+  align-items: flex-start;
   border: 2px dashed #ccc;
   height: 400px;
-  width: 500px;
-  padding: 10px;
+  min-width: 500px;
+  max-width: 740px;
   margin-top: 20px;
 }

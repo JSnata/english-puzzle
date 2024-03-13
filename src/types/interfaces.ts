@@ -1,3 +1,10 @@
+export interface State {
+  levelData: null | GameData;
+  shuffledWordsArr: null | string[];
+  resultArr: string[][];
+  sourceArr: string[][];
+}
+
 export interface Word {
   audioExample: string;
   textExample: string;
