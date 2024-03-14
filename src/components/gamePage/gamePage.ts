@@ -102,5 +102,6 @@ export const renderGamePage = async () => {
     innerText: 'Continue',
   }) as HTMLButtonElement;
   continueButton.disabled = true;
+  continueButton.style.display = 'none';
   continueButton.addEventListener('click', () => continueButtonClickHandler());
 };

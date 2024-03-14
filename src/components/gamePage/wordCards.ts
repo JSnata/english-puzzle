@@ -21,11 +21,16 @@ export const getWordCards = async (level: string): Promise<GameData | void> => {
 
 export const isAnswerAccurate = (sentence: number) => {
   const continueButton = document.querySelector('.continue-button') as HTMLButtonElement;
+  const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
   if (continueButton) {
     if (state.answerArr && arraysAreEqual(state.answerArr, state.resultArr[sentence])) {
+      continueButton.style.display = 'inline-block';
       continueButton.disabled = false;
+      checkButton.style.display = 'none';
     } else {
       continueButton.disabled = true;
+      continueButton.style.display = 'none';
+      checkButton.style.display = 'inline-block';
     }
   }
 };
