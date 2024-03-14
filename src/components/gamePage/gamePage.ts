@@ -28,8 +28,6 @@ export const manageGameState = async (level: string, sentence: number, round: nu
 };
 
 const continueButtonClickHandler = () => {
-  //check if next sentence exists
-  // if (state.roundSentences && state.roundSentences[state.currentSentenceNum + 1]) {
   const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
   const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
   Array.from(resultRow.children).forEach((childElement) => {
@@ -72,6 +70,17 @@ const checkButtonClickHandler = () => {
   });
 };
 
+const autoCompleteButtonClickHandler = () => {
+  const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
+  state.resultArr[state.currentSentenceNum].forEach((el, index) => {
+    resultRow.children[index].innerHTML = state.answerArr[index];
+    resultRow.children[index].classList.remove('incorrect');
+    resultRow.children[index].classList.remove('correct');
+    state.resultArr[state.currentSentenceNum][index] = state.answerArr[index];
+  });
+  isAnswerAccurate(state.currentSentenceNum);
+};
+
 export const renderGamePage = async () => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
   mainContainer.innerHTML = '';
@@ -91,6 +100,10 @@ export const renderGamePage = async () => {
   renderResultField(0);
 
   const actionsContainer = renderElement('div', 'actions-container', mainContainer);
+  const autoCompleteButton = renderElement('button', 'primary-button auto-complete-button', actionsContainer, {
+    innerText: 'Auto-Complete',
+  }) as HTMLButtonElement;
+  autoCompleteButton.addEventListener('click', () => autoCompleteButtonClickHandler());
 
   const checkButton = renderElement('button', 'primary-button check-button', actionsContainer, {
     innerText: 'Check',
