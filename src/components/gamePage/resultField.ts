@@ -6,7 +6,6 @@ export const renderResultRow = (sentence: number) => {
   const field = document.querySelector('.result-field') as HTMLElement;
   const rowContainer = renderElement('div', 'row-container', field);
   rowContainer.dataset.sentence = String(sentence);
-  console.log(state.resultArr);
   state.resultArr[sentence].forEach((word, index) => {
     const resultWordCard = renderElement('p', 'word-card empty', rowContainer, {
       innerText: word,

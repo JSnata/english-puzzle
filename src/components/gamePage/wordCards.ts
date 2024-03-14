@@ -30,15 +30,25 @@ export const isAnswerAccurate = (sentence: number) => {
   }
 };
 
+const isResultRowFilled = (row: HTMLElement) => {
+  const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
+  if (state.resultArr[state.currentSentenceNum].every((el) => el !== '')) {
+    checkButton.disabled = false;
+  } else {
+    checkButton.disabled = true;
+    Array.from(row.children).forEach((childElement) => {
+      childElement.classList.remove('correct');
+      childElement.classList.remove('incorrect');
+    });
+  }
+};
+
 export const wordClickHandler = (e: Event, index: number) => {
   const resultBlock = document.querySelector('.result-field') as HTMLElement;
   const sourceBlock = document.querySelector('.source-container') as HTMLElement;
   const wordElement = e.target as HTMLElement;
-
+  const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
   if (sourceBlock.contains(wordElement)) {
-    const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
-    console.log(resultRow);
-
     let foundEmptyElement = false;
     state.resultArr[state.currentSentenceNum].forEach((el, i) => {
       if (!el && !foundEmptyElement) {
@@ -61,6 +71,7 @@ export const wordClickHandler = (e: Event, index: number) => {
       }
     });
   }
+  isResultRowFilled(resultRow);
   isAnswerAccurate(state.currentSentenceNum);
 };
 
@@ -72,7 +83,6 @@ export const renderSourceCards = (wordsArr: string[]) => {
       const wordCard = renderElement('p', 'word-card', wordsContainer as HTMLElement, {
         innerText: word,
       });
-      console.log(state);
       state.resultArr[state.currentSentenceNum].push('');
       wordCard.addEventListener('click', (e) => wordClickHandler(e, index));
     });

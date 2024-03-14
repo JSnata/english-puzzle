@@ -235,6 +235,7 @@ button[disabled] {
 
 .word-card {
   display: inline-flex;
+  position: relative;
   flex-grow: 1;
   height: 40px;
   margin: 0;
@@ -253,6 +254,26 @@ button[disabled] {
 
 .word-card.empty {
   min-width: 10px;
+}
+
+.word-card.correct::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 4px;
+  left: 0;
+  bottom: 0;
+  background-color: rgb(115, 181, 115);
+}
+
+.word-card.incorrect::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 4px;
+  left: 0;
+  bottom: 0;
+  background-color: rgb(224, 140, 140);
 }
 
 .source-container .word-card {
@@ -274,4 +295,9 @@ button[disabled] {
   width: 100%;
   display: flex;
   align-items: flex-start;
+}
+
+.actions-container {
+  display: flex;
+  gap: 10px;
 }

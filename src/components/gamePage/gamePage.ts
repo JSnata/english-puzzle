@@ -29,9 +29,15 @@ export const manageGameState = async (level: string, sentence: number, round: nu
 
 const continueButtonClickHandler = () => {
   //check if next sentence exists
-  console.log(state);
-
   // if (state.roundSentences && state.roundSentences[state.currentSentenceNum + 1]) {
+  const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
+  const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
+  Array.from(resultRow.children).forEach((childElement) => {
+    childElement.classList.remove('correct');
+    childElement.classList.remove('incorrect');
+  });
+  checkButton.disabled = true;
+
   if (state.currentSentenceNum < 1) {
     state.currentSentenceNum += 1;
   } else {
@@ -53,6 +59,19 @@ const continueButtonClickHandler = () => {
   isAnswerAccurate(state.currentSentenceNum);
 };
 
+const checkButtonClickHandler = () => {
+  const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
+  state.resultArr[state.currentSentenceNum].forEach((el, index) => {
+    if (el === state.answerArr[index]) {
+      resultRow.children[index].classList.remove('incorrect');
+      resultRow.children[index].classList.add('correct');
+    } else {
+      resultRow.children[index].classList.remove('correct');
+      resultRow.children[index].classList.add('incorrect');
+    }
+  });
+};
+
 export const renderGamePage = async () => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
   mainContainer.innerHTML = '';
@@ -70,7 +89,16 @@ export const renderGamePage = async () => {
     renderSourceCards(state.shuffledWordsArr);
   }
   renderResultField(0);
-  const continueButton = renderElement('button', 'primary-button continue-button', mainContainer, {
+
+  const actionsContainer = renderElement('div', 'actions-container', mainContainer);
+
+  const checkButton = renderElement('button', 'primary-button check-button', actionsContainer, {
+    innerText: 'Check',
+  }) as HTMLButtonElement;
+  checkButton.disabled = true;
+  checkButton.addEventListener('click', () => checkButtonClickHandler());
+
+  const continueButton = renderElement('button', 'primary-button continue-button', actionsContainer, {
     innerText: 'Continue',
   }) as HTMLButtonElement;
   continueButton.disabled = true;
