@@ -1,6 +1,7 @@
 import { GameData } from '../../types/interfaces';
 import { renderElement } from '../renderElement';
-import { renderResultField } from './resultField';
+
+import { arraysAreEqual } from '../../utils/arrayUtils';
 import { state } from '../app/app';
 
 export const getWordCards = async (level: string): Promise<GameData | void> => {
@@ -18,13 +19,15 @@ export const getWordCards = async (level: string): Promise<GameData | void> => {
   }
 };
 
-const shuffleArray = (array: string[]): string[] => {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+export const isAnswerAccurate = (sentence: number) => {
+  const continueButton = document.querySelector('.continue-button') as HTMLButtonElement;
+  if (continueButton) {
+    if (state.answerArr && arraysAreEqual(state.answerArr, state.resultArr[sentence])) {
+      continueButton.disabled = false;
+    } else {
+      continueButton.disabled = true;
+    }
   }
-  return shuffledArray;
 };
 
 export const wordClickHandler = (e: Event, index: number) => {
@@ -32,56 +35,46 @@ export const wordClickHandler = (e: Event, index: number) => {
   const sourceBlock = document.querySelector('.source-container') as HTMLElement;
   const wordElement = e.target as HTMLElement;
 
-  if (wordElement.parentNode === sourceBlock) {
+  if (sourceBlock.contains(wordElement)) {
+    const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
+    console.log(resultRow);
+
     let foundEmptyElement = false;
-    console.log([wordElement]);
-    state.resultArr[0].forEach((el, i) => {
+    state.resultArr[state.currentSentenceNum].forEach((el, i) => {
       if (!el && !foundEmptyElement) {
         foundEmptyElement = true;
-        state.resultArr[0][i] = state.sourceArr[0][index];
-        state.sourceArr[0][index] = '';
-        resultBlock.children[i].innerHTML = state.resultArr[0][i];
+        state.resultArr[state.currentSentenceNum][i] = state.sourceArr[state.currentSentenceNum][index];
+        state.sourceArr[state.currentSentenceNum][index] = '';
+        resultRow.children[i].innerHTML = state.resultArr[state.currentSentenceNum][i];
         wordElement.innerHTML = '';
       }
     });
-  } else if (wordElement.parentNode === resultBlock) {
+  } else if (resultBlock.contains(wordElement)) {
     let foundEmptyElement = false;
-    state.sourceArr[0].forEach((el, i) => {
+    state.sourceArr[state.currentSentenceNum].forEach((el, i) => {
       if (!el && !foundEmptyElement) {
         foundEmptyElement = true;
-        state.sourceArr[0][i] = state.resultArr[0][index];
-        state.resultArr[0][index] = '';
-        sourceBlock.children[i].innerHTML = state.sourceArr[0][i];
+        state.sourceArr[state.currentSentenceNum][i] = state.resultArr[state.currentSentenceNum][index];
+        state.resultArr[state.currentSentenceNum][index] = '';
+        sourceBlock.children[i].innerHTML = state.sourceArr[state.currentSentenceNum][i];
         wordElement.innerHTML = '';
       }
     });
   }
+  isAnswerAccurate(state.currentSentenceNum);
 };
 
-export const renderWordCards = async (level: string) => {
-  const gameContainer = document.querySelector('.game-container') as HTMLElement;
-  const data = await getWordCards(level);
-  const wordsContainer = renderElement('div', 'source-container', gameContainer);
-  state.resultArr.push([]);
-  if (data) {
-    state.levelData = data;
-    const sentence = data.rounds['0'].words[0];
-    const wordsArr = sentence.textExample.split(' ');
-    const shuffledWordsArr: string[] = shuffleArray(wordsArr);
-    state.shuffledWordsArr = shuffledWordsArr;
-    state.sourceArr.push(shuffledWordsArr);
-
-    shuffledWordsArr.forEach((word, index) => {
-      const wordCard = renderElement('p', 'word-card', wordsContainer, {
+export const renderSourceCards = (wordsArr: string[]) => {
+  const wordsContainer = document.querySelector('.source-container');
+  if (wordsContainer) {
+    wordsContainer.innerHTML = '';
+    wordsArr.forEach((word, index) => {
+      const wordCard = renderElement('p', 'word-card', wordsContainer as HTMLElement, {
         innerText: word,
       });
-
-      // wordCard.dataset.index = index.toString();
-
-      state.resultArr[0].push('');
+      console.log(state);
+      state.resultArr[state.currentSentenceNum].push('');
       wordCard.addEventListener('click', (e) => wordClickHandler(e, index));
     });
-
-    renderResultField();
   }
 };

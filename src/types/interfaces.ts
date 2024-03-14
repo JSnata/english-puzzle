@@ -1,8 +1,12 @@
 export interface State {
   levelData: null | GameData;
+  roundSentences: null | Word[];
+  currentRoundNum: number;
+  currentSentenceNum: number;
   shuffledWordsArr: null | string[];
   resultArr: string[][];
   sourceArr: string[][];
+  answerArr: string[];
 }
 
 export interface Word {

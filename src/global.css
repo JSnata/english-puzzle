@@ -96,6 +96,11 @@ body {
 .primary-button:hover {
   background-color: var(--primary-color-hover);
 }
+
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 /* Start page */
 
 .page-wrapper {
@@ -256,10 +261,17 @@ body {
 
 .result-field {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
   border: 2px dashed #ccc;
-  height: 400px;
+  min-height: 400px;
   min-width: 500px;
   max-width: 740px;
   margin-top: 20px;
+}
+
+.row-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
 }
