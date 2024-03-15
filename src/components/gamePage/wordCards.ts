@@ -3,6 +3,7 @@ import { renderElement } from '../renderElement';
 
 import { arraysAreEqual } from '../../utils/arrayUtils';
 import { state } from '../app/app';
+// import { renderTranslationHint } from './gamePage';
 
 export const getWordCards = async (level: string): Promise<GameData | void> => {
   try {
@@ -22,6 +23,8 @@ export const getWordCards = async (level: string): Promise<GameData | void> => {
 export const isAnswerAccurate = (sentence: number) => {
   const continueButton = document.querySelector('.continue-button') as HTMLButtonElement;
   const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
+  // const hintIcon = document.querySelector('.translation-container .icon') as HTMLElement;
+
   if (continueButton) {
     if (state.answerArr && arraysAreEqual(state.answerArr, state.resultArr[sentence])) {
       continueButton.style.display = 'inline-block';

@@ -28,17 +28,45 @@ export const manageGameState = async (level: string, sentence: number, round: nu
   }
 };
 
+export const showHint = (flag: boolean) => {
+  if (state.isHintTranslation && !flag) {
+    return;
+  }
+
+  const node = document.querySelector('.game-container .translation-hint-text') as HTMLElement;
+
+  node.classList.toggle('hidden', !flag);
+};
+
 export const renderTranslationHint = () => {
+  const isDisabled = state.isHintTranslation ? '' : 'disabled';
+  const isHidden = state.isHintTranslation ? '' : 'hidden';
+  const gameContainer = document.querySelector('.game-container') as HTMLElement;
+  const translationElement = document.querySelector('.game-container .translation-hint-text') as HTMLElement;
   const translationHintContainer = document.querySelector('.translation-container') as HTMLElement;
+
   translationHintContainer.innerHTML = '';
-  const hintIcon = renderElement('span', 'icon', translationHintContainer, {
+
+  const hintIcon = renderElement('span', `icon ${isDisabled}`, translationHintContainer, {
     innerText: '?',
-  });
-  const translationElement = renderElement('p', 'text hidden', translationHintContainer, {
-    innerText: state.currentTranslation,
-  });
+  }) as HTMLButtonElement;
+
+  if (!translationElement) {
+    renderElement('p', `translation-hint-text ${isHidden}`, gameContainer, {
+      innerText: state.currentTranslation,
+    });
+  } else {
+    translationElement.innerText = state.currentTranslation;
+  }
+
+  showHint(false);
+
   hintIcon.addEventListener('click', () => {
-    translationElement.classList.toggle('hidden');
+    const hint = document.querySelector('.game-container .translation-hint-text') as HTMLElement;
+
+    hintIcon.classList.toggle('disabled', state.isHintTranslation);
+    hint.classList.toggle('hidden', state.isHintTranslation);
+    state.isHintTranslation = !state.isHintTranslation;
   });
 };
 
@@ -70,6 +98,7 @@ const continueButtonClickHandler = () => {
     renderResultRow(state.currentSentenceNum);
   }
   isAnswerAccurate(state.currentSentenceNum);
+  showHint(false);
   renderTranslationHint();
 };
 
@@ -88,13 +117,16 @@ const checkButtonClickHandler = () => {
 
 const autoCompleteButtonClickHandler = () => {
   const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
+
   state.resultArr[state.currentSentenceNum].forEach((el, index) => {
     resultRow.children[index].innerHTML = state.answerArr[index];
     resultRow.children[index].classList.remove('incorrect');
     resultRow.children[index].classList.remove('correct');
     state.resultArr[state.currentSentenceNum][index] = state.answerArr[index];
   });
+
   isAnswerAccurate(state.currentSentenceNum);
+  showHint(true);
 };
 
 const renderActions = () => {

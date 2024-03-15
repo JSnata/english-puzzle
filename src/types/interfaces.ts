@@ -8,6 +8,7 @@ export interface State {
   resultArr: string[][];
   sourceArr: string[][];
   answerArr: string[];
+  isHintTranslation: boolean;
 }
 
 export interface Word {
