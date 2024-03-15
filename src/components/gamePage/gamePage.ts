@@ -9,6 +9,7 @@ export const manageWordsState = (sentence: number, round: number) => {
   if (state.levelData) {
     state.roundSentences = state.levelData.rounds[round].words;
     state.resultArr.push([]);
+    state.currentTranslation = state.roundSentences[sentence].textExampleTranslate;
     state.currentSentenceNum = sentence;
     const currentSentence = state.roundSentences[sentence];
     const wordsArr = currentSentence.textExample.split(' ');
@@ -25,6 +26,20 @@ export const manageGameState = async (level: string, sentence: number, round: nu
     state.levelData = data;
     manageWordsState(sentence, round);
   }
+};
+
+export const renderTranslationHint = () => {
+  const translationHintContainer = document.querySelector('.translation-container') as HTMLElement;
+  translationHintContainer.innerHTML = '';
+  const hintIcon = renderElement('span', 'icon', translationHintContainer, {
+    innerText: '?',
+  });
+  const translationElement = renderElement('p', 'text hidden', translationHintContainer, {
+    innerText: state.currentTranslation,
+  });
+  hintIcon.addEventListener('click', () => {
+    translationElement.classList.toggle('hidden');
+  });
 };
 
 const continueButtonClickHandler = () => {
@@ -55,6 +70,7 @@ const continueButtonClickHandler = () => {
     renderResultRow(state.currentSentenceNum);
   }
   isAnswerAccurate(state.currentSentenceNum);
+  renderTranslationHint();
 };
 
 const checkButtonClickHandler = () => {
@@ -81,24 +97,8 @@ const autoCompleteButtonClickHandler = () => {
   isAnswerAccurate(state.currentSentenceNum);
 };
 
-export const renderGamePage = async () => {
+const renderActions = () => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
-  mainContainer.innerHTML = '';
-  const mainHeader = renderElement('div', 'main-header', mainContainer);
-  const logoutButton = renderElement('button', 'primary-button logout-button', mainHeader, {
-    type: 'button',
-    innerText: 'Logout',
-  });
-  logoutButton.addEventListener('click', () => logout());
-
-  const gameContainer = renderElement('div', 'game-container', mainContainer);
-  renderElement('div', 'source-container', gameContainer);
-  await manageGameState('1', 0, 0);
-  if (state.shuffledWordsArr) {
-    renderSourceCards(state.shuffledWordsArr);
-  }
-  renderResultField(0);
-
   const actionsContainer = renderElement('div', 'actions-container', mainContainer);
   const autoCompleteButton = renderElement('button', 'primary-button auto-complete-button', actionsContainer, {
     innerText: 'Auto-Complete',
@@ -117,4 +117,26 @@ export const renderGamePage = async () => {
   continueButton.disabled = true;
   continueButton.style.display = 'none';
   continueButton.addEventListener('click', () => continueButtonClickHandler());
+};
+
+export const renderGamePage = async () => {
+  const mainContainer = document.querySelector('.main-container') as HTMLElement;
+  mainContainer.innerHTML = '';
+  const mainHeader = renderElement('div', 'main-header', mainContainer);
+  const logoutButton = renderElement('button', 'primary-button logout-button', mainHeader, {
+    type: 'button',
+    innerText: 'Logout',
+  });
+  logoutButton.addEventListener('click', () => logout());
+
+  const gameContainer = renderElement('div', 'game-container', mainContainer);
+  renderElement('div', 'translation-container', gameContainer);
+  renderElement('div', 'source-container', gameContainer);
+  await manageGameState('1', 0, 0);
+  if (state.shuffledWordsArr) {
+    renderSourceCards(state.shuffledWordsArr);
+  }
+  renderResultField(0);
+  renderTranslationHint();
+  renderActions();
 };

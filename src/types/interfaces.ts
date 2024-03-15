@@ -1,6 +1,7 @@
 export interface State {
   levelData: null | GameData;
   roundSentences: null | Word[];
+  currentTranslation: string;
   currentRoundNum: number;
   currentSentenceNum: number;
   shuffledWordsArr: null | string[];

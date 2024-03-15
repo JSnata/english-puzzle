@@ -231,6 +231,7 @@ button[disabled] {
   justify-content: center;
   max-width: 580px;
   margin-top: 20px;
+  order: 3;
 }
 
 .word-card {
@@ -289,6 +290,7 @@ button[disabled] {
   min-width: 500px;
   max-width: 740px;
   margin-top: 20px;
+  order: 2;
 }
 
 .row-container {
@@ -300,4 +302,47 @@ button[disabled] {
 .actions-container {
   display: flex;
   gap: 10px;
+}
+
+.translation-container {
+  display: flex;
+  width: 100%;
+  padding-left: 20px;
+  width: 500px;
+  min-height: 50px;
+}
+
+.translation-container .icon {
+  display: block;
+  border: 1px solid var(--primary-color);
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  color: rgb(51, 51, 51);
+  font-size: 16px;
+  border-radius: 5px;
+  height: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+.translation-container .icon:hover {
+  color: white;
+  background-color: var(--primary-color);
+}
+
+.translation-container .text {
+  display: block;
+  color: var(--primary-color);
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.translation-container .text.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.translation-container .text:not(.hidden) {
+  opacity: 1;
 }
