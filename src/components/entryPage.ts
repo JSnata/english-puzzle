@@ -61,6 +61,8 @@ const loginFormHandler = (e: Event) => {
   if (firstNameValid && surnameValid) {
     localStorage.setItem('firstName', firstNameInput.value);
     localStorage.setItem('surname', surnameInput.value);
+  } else {
+    return;
   }
   initialRender();
 };

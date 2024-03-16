@@ -1,5 +1,5 @@
-import { shuffleArray } from './../../utils/arrayUtils';
-import { logout } from './../../utils/localStorageUtils';
+import { shuffleArray } from '../../utils/arrayUtils';
+import { logout, setHintState } from '../../utils/localStorageUtils';
 import { getWordCards, isAnswerAccurate, renderSourceCards } from './wordCards';
 import { renderResultField, renderResultRow } from './resultField';
 import { renderElement } from '../renderElement';
@@ -109,12 +109,14 @@ export const renderHints = () => {
     textHintIcon.classList.toggle('disabled', state.isHintTranslation);
     textHint.classList.toggle('hidden', state.isHintTranslation);
     state.isHintTranslation = !state.isHintTranslation;
+    setHintState('text');
   });
 
   audioHintIcon.addEventListener('click', () => {
     audioHintIcon.classList.toggle('disabled', state.isHintAudio);
     audioHint.classList.toggle('hidden', state.isHintAudio);
     state.isHintAudio = !state.isHintAudio;
+    setHintState('audio');
   });
 };
 

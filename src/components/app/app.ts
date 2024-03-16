@@ -1,5 +1,6 @@
 import { initialRender } from '../initialRender';
 import { State } from '../../types/interfaces';
+import { getHintState } from '../../utils/localStorageUtils';
 
 export const state: State = {
   levelData: null,
@@ -12,8 +13,8 @@ export const state: State = {
   resultArr: [],
   sourceArr: [],
   answerArr: [],
-  isHintTranslation: false,
-  isHintAudio: false,
+  isHintTranslation: getHintState('text'),
+  isHintAudio: getHintState('audio'),
 };
 
 const App = () => {
