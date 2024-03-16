@@ -5,6 +5,7 @@ export const state: State = {
   levelData: null,
   roundSentences: null,
   currentTranslation: '',
+  currentAudio: '',
   currentSentenceNum: 0,
   currentRoundNum: 0,
   shuffledWordsArr: null,
@@ -12,6 +13,7 @@ export const state: State = {
   sourceArr: [],
   answerArr: [],
   isHintTranslation: false,
+  isHintAudio: false,
 };
 
 const App = () => {

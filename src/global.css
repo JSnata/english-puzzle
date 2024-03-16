@@ -224,6 +224,8 @@ button[disabled] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  max-width: 600px;
+  width: 100%;
 }
 .source-container {
   display: flex;
@@ -288,7 +290,8 @@ button[disabled] {
   border: 2px dashed #ccc;
   min-height: 400px;
   min-width: 500px;
-  max-width: 740px;
+  width: 100%;
+  max-width: 600px;
   margin-top: 20px;
   order: 2;
 }
@@ -304,19 +307,24 @@ button[disabled] {
   gap: 10px;
 }
 
-.translation-container {
+.hints-content-block,
+.hint-actions-container {
   display: flex;
   width: 100%;
-  padding-left: 20px;
-  width: 500px;
-  min-height: 50px;
+  align-items: center;
+  gap: 8px;
 }
 
-.translation-container .icon {
+.hints-content-block {
+  order: 2;
+  margin-top: 20px;
+}
+
+.hint-actions-container .translation-icon,
+.hint-actions-container .audio-icon {
   display: block;
   color: white;
   padding: 5px 10px;
-  margin-right: 5px;
   cursor: pointer;
   border: 1px solid;
   font-size: 16px;
@@ -325,31 +333,41 @@ button[disabled] {
   transition: all 0.3s ease-in-out;
 }
 
-.translation-container .icon:not(.disabled) {
+.hint-actions-container .translation-icon:not(.disabled),
+.hint-actions-container .audio-icon:not(.disabled) {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
 }
 
-.translation-container .icon.disabled {
+.hint-actions-container .translation-icon.disabled,
+.hint-actions-container .audio-icon.disabled {
   border-color: var(--border-color);
   background-color: #ccc;
 }
 
-.game-container .translation-hint-text {
+.game-container .translation-hint-text,
+.game-container .audio-hint-button {
   order: 2;
-  display: block;
+  display: flex;
   color: var(--primary-color);
-  padding: 5px;
+  padding: 0;
   margin: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  display: none;
+  min-height: 35px;
+  align-items: center;
 }
 
-.game-container .translation-hint-text.hidden {
-  opacity: 0;
-  pointer-events: none;
+.game-container .audio-hint-button {
+  font-size: 30px;
+  background-color: transparent;
+  border: 0;
 }
 
-.game-container .translation-hint-text:not(.hidden) {
-  opacity: 1;
+.game-container .translation-hint-text.hidden .game-container .audio-hint-button.hidden {
+  display: none;
+}
+
+.game-container .translation-hint-text:not(.hidden),
+.game-container .audio-hint-button:not(.hidden) {
+  display: flex;
 }

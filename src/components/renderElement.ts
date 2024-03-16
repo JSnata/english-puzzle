@@ -22,7 +22,7 @@ export const renderElement = (
 
   if (attr) {
     for (const key in attr) {
-      if (key === 'innerText') {
+      if (key === 'innerText' || key === 'innerHTML') {
         element.innerText = attr[key];
 
         return element;

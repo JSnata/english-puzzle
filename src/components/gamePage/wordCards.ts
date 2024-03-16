@@ -3,7 +3,7 @@ import { renderElement } from '../renderElement';
 
 import { arraysAreEqual } from '../../utils/arrayUtils';
 import { state } from '../app/app';
-// import { renderTranslationHint } from './gamePage';
+import { showHintContent } from './gamePage';
 
 export const getWordCards = async (level: string): Promise<GameData | void> => {
   try {
@@ -30,6 +30,9 @@ export const isAnswerAccurate = (sentence: number) => {
       continueButton.style.display = 'inline-block';
       continueButton.disabled = false;
       checkButton.style.display = 'none';
+
+      showHintContent('text', false);
+      showHintContent('audio', false);
     } else {
       continueButton.disabled = true;
       continueButton.style.display = 'none';

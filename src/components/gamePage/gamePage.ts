@@ -5,11 +5,14 @@ import { renderResultField, renderResultRow } from './resultField';
 import { renderElement } from '../renderElement';
 import { state } from '../app/app';
 
+const baseUrl = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/';
+
 export const manageWordsState = (sentence: number, round: number) => {
   if (state.levelData) {
     state.roundSentences = state.levelData.rounds[round].words;
     state.resultArr.push([]);
     state.currentTranslation = state.roundSentences[sentence].textExampleTranslate;
+    state.currentAudio = state.roundSentences[sentence].audioExample;
     state.currentSentenceNum = sentence;
     const currentSentence = state.roundSentences[sentence];
     const wordsArr = currentSentence.textExample.split(' ');
@@ -28,46 +31,104 @@ export const manageGameState = async (level: string, sentence: number, round: nu
   }
 };
 
-export const showHint = (flag: boolean) => {
-  if (state.isHintTranslation && !flag) {
+export const showHintContent = (type: 'text' | 'audio', flag: boolean) => {
+  let typeState: boolean;
+  let typeSelector: string;
+
+  switch (type) {
+    case 'audio':
+      typeState = state.isHintAudio;
+      typeSelector = 'audio-hint-button';
+      break;
+    case 'text':
+    default:
+      typeState = state.isHintTranslation;
+      typeSelector = 'translation-hint-text';
+      break;
+  }
+
+  if (typeState && !flag) {
     return;
   }
 
-  const node = document.querySelector('.game-container .translation-hint-text') as HTMLElement;
-
+  const node = document.querySelector(`.game-container .${typeSelector}`) as HTMLElement;
   node.classList.toggle('hidden', !flag);
 };
 
-export const renderTranslationHint = () => {
-  const isDisabled = state.isHintTranslation ? '' : 'disabled';
-  const isHidden = state.isHintTranslation ? '' : 'hidden';
+export const renderHints = () => {
   const gameContainer = document.querySelector('.game-container') as HTMLElement;
-  const translationElement = document.querySelector('.game-container .translation-hint-text') as HTMLElement;
-  const translationHintContainer = document.querySelector('.translation-container') as HTMLElement;
+  const hintsContainer = renderElement('div', 'hints-content-block', gameContainer);
+  const hintsActionsContainer = renderElement('div', 'hint-actions-container', gameContainer);
+  const textHintWrapper = renderElement('div', 'text-hint-wrapper', hintsActionsContainer);
+  const audioHintWrapper = renderElement('div', 'audio-hint-wrapper', hintsActionsContainer);
 
-  translationHintContainer.innerHTML = '';
+  const textHint = renderElement(
+    'p',
+    `translation-hint-text ${state.isHintTranslation ? '' : 'hidden'}`,
+    hintsContainer,
+    {
+      innerText: state.currentTranslation,
+    }
+  );
+  const textHintIcon = renderElement(
+    'span',
+    `translation-icon ${state.isHintTranslation ? '' : 'disabled'}`,
+    textHintWrapper,
+    {
+      innerText: '?',
+    }
+  ) as HTMLButtonElement;
+  const audioHint = renderElement('button', `audio-hint-button ${state.isHintAudio ? '' : 'hidden'}`, hintsContainer, {
+    innerText: '🎵',
+  });
+  const audioElement = renderElement('audio', '', audioHintWrapper, {
+    id: 'audioPlayer',
+  });
+  const audioElementSource = renderElement('source', '', audioElement, {
+    type: 'audio/mp3',
+  }) as HTMLSourceElement;
+  audioElementSource.src = baseUrl + state.currentAudio;
 
-  const hintIcon = renderElement('span', `icon ${isDisabled}`, translationHintContainer, {
-    innerText: '?',
+  const audioHintIcon = renderElement('span', `audio-icon ${state.isHintAudio ? '' : 'disabled'}`, audioHintWrapper, {
+    innerText: 'Audio',
   }) as HTMLButtonElement;
 
-  if (!translationElement) {
-    renderElement('p', `translation-hint-text ${isHidden}`, gameContainer, {
-      innerText: state.currentTranslation,
-    });
-  } else {
-    translationElement.innerText = state.currentTranslation;
-  }
+  showHintContent('text', false);
+  showHintContent('audio', false);
 
-  showHint(false);
+  audioHint.addEventListener('click', () => {
+    const audioPlayer = document.getElementById('audioPlayer') as HTMLAudioElement;
+    const source = audioPlayer.querySelector('source') as HTMLSourceElement;
+    console.log(audioPlayer);
+    console.log(source.src);
 
-  hintIcon.addEventListener('click', () => {
-    const hint = document.querySelector('.game-container .translation-hint-text') as HTMLElement;
+    audioPlayer.play();
+  });
 
-    hintIcon.classList.toggle('disabled', state.isHintTranslation);
-    hint.classList.toggle('hidden', state.isHintTranslation);
+  textHintIcon.addEventListener('click', () => {
+    textHintIcon.classList.toggle('disabled', state.isHintTranslation);
+    textHint.classList.toggle('hidden', state.isHintTranslation);
     state.isHintTranslation = !state.isHintTranslation;
   });
+
+  audioHintIcon.addEventListener('click', () => {
+    audioHintIcon.classList.toggle('disabled', state.isHintAudio);
+    audioHint.classList.toggle('hidden', state.isHintAudio);
+    state.isHintAudio = !state.isHintAudio;
+  });
+};
+
+export const setTextHintContent = () => {
+  const textElement = document.querySelector('.game-container .translation-hint-text') as HTMLElement;
+
+  textElement.innerText = state.currentTranslation;
+};
+
+export const setAudioHintContent = () => {
+  const audioPlayer = document.getElementById('audioPlayer') as HTMLAudioElement;
+  const sourceElement = document.querySelector('#audioPlayer source') as HTMLSourceElement;
+  sourceElement.src = baseUrl + state.currentAudio;
+  audioPlayer.load();
 };
 
 const continueButtonClickHandler = () => {
@@ -98,8 +159,10 @@ const continueButtonClickHandler = () => {
     renderResultRow(state.currentSentenceNum);
   }
   isAnswerAccurate(state.currentSentenceNum);
-  showHint(false);
-  renderTranslationHint();
+  showHintContent('text', false);
+  showHintContent('audio', false);
+  setTextHintContent();
+  setAudioHintContent();
 };
 
 const checkButtonClickHandler = () => {
@@ -126,7 +189,8 @@ const autoCompleteButtonClickHandler = () => {
   });
 
   isAnswerAccurate(state.currentSentenceNum);
-  showHint(true);
+  showHintContent('text', true);
+  showHintContent('audio', true);
 };
 
 const renderActions = () => {
@@ -162,13 +226,14 @@ export const renderGamePage = async () => {
   logoutButton.addEventListener('click', () => logout());
 
   const gameContainer = renderElement('div', 'game-container', mainContainer);
-  renderElement('div', 'translation-container', gameContainer);
+
   renderElement('div', 'source-container', gameContainer);
   await manageGameState('1', 0, 0);
+
   if (state.shuffledWordsArr) {
     renderSourceCards(state.shuffledWordsArr);
   }
   renderResultField(0);
-  renderTranslationHint();
+  renderHints();
   renderActions();
 };

@@ -2,6 +2,7 @@ export interface State {
   levelData: null | GameData;
   roundSentences: null | Word[];
   currentTranslation: string;
+  currentAudio: string;
   currentRoundNum: number;
   currentSentenceNum: number;
   shuffledWordsArr: null | string[];
@@ -9,6 +10,7 @@ export interface State {
   sourceArr: string[][];
   answerArr: string[];
   isHintTranslation: boolean;
+  isHintAudio: boolean;
 }
 
 export interface Word {
