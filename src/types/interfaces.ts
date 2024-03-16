@@ -5,6 +5,8 @@ export interface State {
   currentAudio: string;
   currentRoundNum: number;
   currentSentenceNum: number;
+  currentLevel: string;
+  roundsCounter: number;
   shuffledWordsArr: null | string[];
   resultArr: string[][];
   sourceArr: string[][];

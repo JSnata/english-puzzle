@@ -9,6 +9,8 @@ export const state: State = {
   currentAudio: '',
   currentSentenceNum: 0,
   currentRoundNum: 0,
+  currentLevel: '1',
+  roundsCounter: 0,
   shuffledWordsArr: null,
   resultArr: [],
   sourceArr: [],

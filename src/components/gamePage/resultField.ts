@@ -3,6 +3,8 @@ import { state } from '../app/app';
 import { wordClickHandler } from './wordCards';
 
 export const renderResultRow = (sentence: number) => {
+  console.log(state);
+
   const field = document.querySelector('.result-field') as HTMLElement;
   const rowContainer = renderElement('div', 'row-container', field);
   rowContainer.dataset.sentence = String(sentence);

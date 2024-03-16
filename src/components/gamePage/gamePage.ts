@@ -1,19 +1,24 @@
+// import { GameData } from './../../types/interfaces';
 import { shuffleArray } from '../../utils/arrayUtils';
 import { logout, setHintState } from '../../utils/localStorageUtils';
 import { getWordCards, isAnswerAccurate, renderSourceCards } from './wordCards';
 import { renderResultField, renderResultRow } from './resultField';
 import { renderElement } from '../renderElement';
 import { state } from '../app/app';
+import { renderStartGameMenu } from '../gameMenu';
 
 const baseUrl = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/';
 
-export const manageWordsState = (sentence: number, round: number) => {
+export const manageWordsState = (level: string, sentence: number, round: number) => {
   if (state.levelData) {
     state.roundSentences = state.levelData.rounds[round].words;
     state.resultArr.push([]);
     state.currentTranslation = state.roundSentences[sentence].textExampleTranslate;
     state.currentAudio = state.roundSentences[sentence].audioExample;
     state.currentSentenceNum = sentence;
+    state.currentRoundNum = round;
+    state.currentLevel = level;
+    state.roundsCounter = state.levelData.rounds.length;
     const currentSentence = state.roundSentences[sentence];
     const wordsArr = currentSentence.textExample.split(' ');
     const shuffledWordsArr: string[] = shuffleArray(wordsArr);
@@ -27,7 +32,7 @@ export const manageGameState = async (level: string, sentence: number, round: nu
   const data = await getWordCards(level);
   if (data) {
     state.levelData = data;
-    manageWordsState(sentence, round);
+    manageWordsState(level, sentence, round);
   }
 };
 
@@ -155,7 +160,7 @@ const continueButtonClickHandler = () => {
     state.sourceArr = [];
   }
 
-  manageWordsState(state.currentSentenceNum, state.currentRoundNum);
+  manageWordsState(state.currentLevel, state.currentSentenceNum, state.currentRoundNum);
   if (state.shuffledWordsArr) {
     renderSourceCards(state.shuffledWordsArr);
     renderResultRow(state.currentSentenceNum);
@@ -165,6 +170,7 @@ const continueButtonClickHandler = () => {
   showHintContent('audio', false);
   setTextHintContent();
   setAudioHintContent();
+  renderStartGameMenu();
 };
 
 const checkButtonClickHandler = () => {
@@ -217,7 +223,7 @@ const renderActions = () => {
   continueButton.addEventListener('click', () => continueButtonClickHandler());
 };
 
-export const renderGamePage = async () => {
+export const renderGamePage = async (level = '1', sentence = 0, round = 0) => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
   mainContainer.innerHTML = '';
   const mainHeader = renderElement('div', 'main-header', mainContainer);
@@ -230,12 +236,13 @@ export const renderGamePage = async () => {
   const gameContainer = renderElement('div', 'game-container', mainContainer);
 
   renderElement('div', 'source-container', gameContainer);
-  await manageGameState('1', 0, 0);
+  await manageGameState(level, sentence, round);
 
   if (state.shuffledWordsArr) {
     renderSourceCards(state.shuffledWordsArr);
   }
-  renderResultField(0);
+  renderResultField(sentence);
   renderHints();
+  renderStartGameMenu();
   renderActions();
 };
