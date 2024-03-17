@@ -32,6 +32,10 @@ export const isAnswerAccurate = (sentence: number) => {
       continueButton.disabled = false;
       checkButton.style.display = 'none';
 
+      if (!state.unknownSentences.includes(sentence)) {
+        state.knownSentences.push(sentence);
+      }
+
       showHintContent('text', false);
       showHintContent('audio', false);
       if (state.resultArr.length === 2) {
@@ -66,6 +70,7 @@ export const wordClickHandler = (e: Event, index: number) => {
   const sourceBlock = document.querySelector('.source-container') as HTMLElement;
   const wordElement = e.target as HTMLElement;
   const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
+
   if (sourceBlock.contains(wordElement)) {
     let foundEmptyElement = false;
     state.resultArr[state.currentSentenceNum].forEach((el, i) => {

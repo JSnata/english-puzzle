@@ -14,6 +14,8 @@ export interface State {
   answerArr: string[];
   isHintTranslation: boolean;
   isHintAudio: boolean;
+  knownSentences: number[];
+  unknownSentences: number[];
 }
 
 export interface Word {

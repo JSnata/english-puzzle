@@ -1,7 +1,7 @@
 import { renderResultsPage } from './../resultsPage';
 // import { GameData } from './../../types/interfaces';
 import { shuffleArray } from '../../utils/arrayUtils';
-import { logout, setHintState, saveGameProgress, getGameProgress } from '../../utils/localStorageUtils';
+import { logout, setHintState, saveGameProgress } from '../../utils/localStorageUtils';
 import { getWordCards, isAnswerAccurate, renderSourceCards } from './wordCards';
 import { renderResultField, renderResultRow } from './resultField';
 import { renderElement } from '../renderElement';
@@ -202,6 +202,7 @@ const checkButtonClickHandler = () => {
 
 const autoCompleteButtonClickHandler = () => {
   const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
+  const sourceBlockItems = document.querySelectorAll('.source-container > .word-card') as NodeListOf<HTMLElement>;
 
   state.resultArr[state.currentSentenceNum].forEach((el, index) => {
     resultRow.children[index].innerHTML = state.answerArr[index];
@@ -210,6 +211,13 @@ const autoCompleteButtonClickHandler = () => {
     state.resultArr[state.currentSentenceNum][index] = state.answerArr[index];
   });
 
+  sourceBlockItems.forEach((item) => {
+    if (item) {
+      item.innerHTML = '';
+    }
+  });
+
+  state.unknownSentences.push(state.currentSentenceNum);
   isAnswerAccurate(state.currentSentenceNum);
   showHintContent('text', true);
   showHintContent('audio', true);
@@ -248,17 +256,6 @@ const renderActions = () => {
   resultsButton.addEventListener('click', () => resultsButtonClickHandler());
 };
 
-const renderProgressMessage = () => {
-  const gameContainer = document.querySelector('.game-container') as HTMLElement;
-  const node = renderElement('div', 'source-container', gameContainer, {
-    innerText: '12312312312',
-  });
-
-  setTimeout(() => {
-    node.remove();
-  }, 5000);
-};
-
 export const renderGamePage = async (level = '1', sentence = 0, round = 0) => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
   mainContainer.innerHTML = '';
@@ -281,7 +278,4 @@ export const renderGamePage = async (level = '1', sentence = 0, round = 0) => {
   renderHints();
   renderStartGameMenu();
   renderActions();
-  if (getGameProgress('currentLevel')) {
-    renderProgressMessage();
-  }
 };

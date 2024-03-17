@@ -3,11 +3,26 @@ import { renderElement } from './renderElement';
 import { renderGamePage } from './gamePage/gamePage';
 import { logout, getGameProgress } from '../utils/localStorageUtils';
 
+const renderProgressMessage = () => {
+  const gameContainer = document.querySelector('.game-container') as HTMLElement;
+  const node = renderElement('div', 'source-container', gameContainer, {
+    innerText: '12312312312',
+  });
+
+  setTimeout(() => {
+    node.remove();
+  }, 5000);
+};
+
 const startGameHandler = () => {
   const currentRoundNum = getGameProgress('currentRoundNum') ?? state.currentRoundNum;
   const currentLevel = getGameProgress('currentLevel') ?? state.currentLevel;
 
   renderGamePage(currentLevel, 0, Number(currentRoundNum));
+
+  if (getGameProgress('currentLevel')) {
+    renderProgressMessage();
+  }
 };
 
 export const renderStartPage = (userCredentials: { firstName: string; surname: string }) => {

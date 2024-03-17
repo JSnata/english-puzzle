@@ -18,6 +18,8 @@ export const state: State = {
   answerArr: [],
   isHintTranslation: getHintState('text'),
   isHintAudio: getHintState('audio'),
+  knownSentences: [],
+  unknownSentences: [],
 };
 
 const App = () => {

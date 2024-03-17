@@ -62,12 +62,14 @@ export const renderStartGameMenu = () => {
   levelSelect.addEventListener('change', function () {
     const selectedLevel = levelSelect.value;
     state.resultArr = [];
+    state.sourceArr = [];
     renderGamePage(selectedLevel, 0, 0);
   });
 
   roundSelect.addEventListener('change', function () {
     const selectedRound = roundSelect.value;
     state.resultArr = [];
+    state.sourceArr = [];
     renderGamePage(state.currentLevel, 0, Number(selectedRound) - 1);
   });
 };
