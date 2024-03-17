@@ -52,3 +52,12 @@ export const logout = () => {
   clearHintsState();
   initialRender();
 };
+
+export const saveGameProgress = () => {
+  localStorage.setItem('currentLevel', state.currentLevel.toString());
+  localStorage.setItem('currentRoundNum', state.currentRoundNum.toString());
+};
+
+export const getGameProgress = (type: 'currentLevel' | 'currentRoundNum') => {
+  return localStorage.getItem(type);
+};

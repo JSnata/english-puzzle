@@ -10,6 +10,7 @@ export const state: State = {
   currentSentenceNum: 0,
   currentRoundNum: 0,
   currentLevel: '1',
+  maxLevel: '6',
   roundsCounter: 0,
   shuffledWordsArr: null,
   resultArr: [],

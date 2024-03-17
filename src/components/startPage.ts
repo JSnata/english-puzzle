@@ -1,9 +1,13 @@
+import { state } from './app/app';
 import { renderElement } from './renderElement';
 import { renderGamePage } from './gamePage/gamePage';
-import { logout } from '../utils/localStorageUtils';
+import { logout, getGameProgress } from '../utils/localStorageUtils';
 
 const startGameHandler = () => {
-  renderGamePage();
+  const currentRoundNum = getGameProgress('currentRoundNum') ?? state.currentRoundNum;
+  const currentLevel = getGameProgress('currentLevel') ?? state.currentLevel;
+
+  renderGamePage(currentLevel, 0, Number(currentRoundNum));
 };
 
 export const renderStartPage = (userCredentials: { firstName: string; surname: string }) => {

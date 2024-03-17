@@ -1,6 +1,6 @@
 // import { GameData } from './../../types/interfaces';
 import { shuffleArray } from '../../utils/arrayUtils';
-import { logout, setHintState } from '../../utils/localStorageUtils';
+import { logout, setHintState, saveGameProgress, getGameProgress } from '../../utils/localStorageUtils';
 import { getWordCards, isAnswerAccurate, renderSourceCards } from './wordCards';
 import { renderResultField, renderResultRow } from './resultField';
 import { renderElement } from '../renderElement';
@@ -11,7 +11,8 @@ const baseUrl = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puz
 
 export const manageWordsState = (level: string, sentence: number, round: number) => {
   if (state.levelData) {
-    state.roundSentences = state.levelData.rounds[round].words;
+    const test = round >= state.levelData.rounds.length ? state.levelData.rounds.length - 1 : round;
+    state.roundSentences = state.levelData.rounds[test].words;
     state.resultArr.push([]);
     state.currentTranslation = state.roundSentences[sentence].textExampleTranslate;
     state.currentAudio = state.roundSentences[sentence].audioExample;
@@ -25,6 +26,16 @@ export const manageWordsState = (level: string, sentence: number, round: number)
     state.answerArr = wordsArr;
     state.shuffledWordsArr = shuffledWordsArr;
     state.sourceArr.push(shuffledWordsArr);
+
+    if (round >= state.levelData.rounds.length) {
+      state.currentLevel = (+level + 1).toString();
+      state.currentRoundNum = 0;
+
+      if (+state.currentLevel > +state.maxLevel) {
+        state.currentLevel = '1';
+        state.currentRoundNum = 0;
+      }
+    }
   }
 };
 
@@ -158,6 +169,7 @@ const continueButtonClickHandler = () => {
     state.currentSentenceNum = 0;
     state.resultArr = [];
     state.sourceArr = [];
+    saveGameProgress();
   }
 
   manageWordsState(state.currentLevel, state.currentSentenceNum, state.currentRoundNum);
@@ -223,6 +235,17 @@ const renderActions = () => {
   continueButton.addEventListener('click', () => continueButtonClickHandler());
 };
 
+const renderProgressMessage = () => {
+  const gameContainer = document.querySelector('.game-container') as HTMLElement;
+  const node = renderElement('div', 'source-container', gameContainer, {
+    innerText: '12312312312',
+  });
+
+  setTimeout(() => {
+    node.remove();
+  }, 5000);
+};
+
 export const renderGamePage = async (level = '1', sentence = 0, round = 0) => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
   mainContainer.innerHTML = '';
@@ -245,4 +268,7 @@ export const renderGamePage = async (level = '1', sentence = 0, round = 0) => {
   renderHints();
   renderStartGameMenu();
   renderActions();
+  if (getGameProgress('currentLevel')) {
+    renderProgressMessage();
+  }
 };

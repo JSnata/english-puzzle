@@ -7,6 +7,7 @@ export interface State {
   currentSentenceNum: number;
   currentLevel: string;
   roundsCounter: number;
+  maxLevel: string;
   shuffledWordsArr: null | string[];
   resultArr: string[][];
   sourceArr: string[][];

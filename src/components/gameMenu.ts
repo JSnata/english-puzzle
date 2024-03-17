@@ -22,7 +22,7 @@ export const renderStartGameMenu = () => {
     for: 'levelSelect',
   });
 
-  levelLabel.innerText = 'Choose a level';
+  levelLabel.innerText = 'Level';
   const levelSelect = renderElement('select', 'game-menu-select', elementWrap1, {
     id: 'levelSelect',
     name: 'level',
@@ -43,7 +43,7 @@ export const renderStartGameMenu = () => {
     for: 'roundSelect',
   });
 
-  roundLabel.innerText = 'Choose a round';
+  roundLabel.innerText = 'Round';
   const roundSelect = renderElement('select', 'game-menu-select', elementWrap2, {
     id: 'roundSelect',
     name: 'round',
