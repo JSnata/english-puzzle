@@ -23,6 +23,7 @@ export const getWordCards = async (level: string): Promise<GameData | void> => {
 export const isAnswerAccurate = (sentence: number) => {
   const continueButton = document.querySelector('.continue-button') as HTMLButtonElement;
   const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
+  const resultsButton = document.querySelector('.results-button') as HTMLButtonElement;
   // const hintIcon = document.querySelector('.translation-container .icon') as HTMLElement;
 
   if (continueButton) {
@@ -33,10 +34,16 @@ export const isAnswerAccurate = (sentence: number) => {
 
       showHintContent('text', false);
       showHintContent('audio', false);
+      if (state.resultArr.length === 2) {
+        resultsButton.style.display = 'inline-block';
+        resultsButton.disabled = false;
+      }
     } else {
       continueButton.disabled = true;
       continueButton.style.display = 'none';
+      resultsButton.style.display = 'inline-block';
       checkButton.style.display = 'inline-block';
+      resultsButton.disabled = true;
     }
   }
 };

@@ -101,6 +101,14 @@ button[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.primary-button.results-button {
+  background-color: #47a060;
+}
+
+/* .primary-button.results-button:hover {
+  background-color: var(--primary-color);
+} */
 /* Start page */
 
 .page-wrapper {

@@ -1,3 +1,4 @@
+import { renderResultsPage } from './../resultsPage';
 // import { GameData } from './../../types/interfaces';
 import { shuffleArray } from '../../utils/arrayUtils';
 import { logout, setHintState, saveGameProgress, getGameProgress } from '../../utils/localStorageUtils';
@@ -151,6 +152,7 @@ export const setAudioHintContent = () => {
 
 const continueButtonClickHandler = () => {
   const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
+  // const resultsButton = document.querySelector('.results-button') as HTMLButtonElement;
   const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
   Array.from(resultRow.children).forEach((childElement) => {
     childElement.classList.remove('correct');
@@ -213,6 +215,10 @@ const autoCompleteButtonClickHandler = () => {
   showHintContent('audio', true);
 };
 
+const resultsButtonClickHandler = () => {
+  renderResultsPage();
+};
+
 const renderActions = () => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
   const actionsContainer = renderElement('div', 'actions-container', mainContainer);
@@ -233,6 +239,13 @@ const renderActions = () => {
   continueButton.disabled = true;
   continueButton.style.display = 'none';
   continueButton.addEventListener('click', () => continueButtonClickHandler());
+
+  const resultsButton = renderElement('button', 'primary-button results-button', actionsContainer, {
+    innerText: 'Results',
+  }) as HTMLButtonElement;
+  resultsButton.disabled = true;
+  resultsButton.style.display = 'none';
+  resultsButton.addEventListener('click', () => resultsButtonClickHandler());
 };
 
 const renderProgressMessage = () => {
