@@ -49,6 +49,8 @@ const clearHintsState = () => {
 export const logout = () => {
   localStorage.removeItem('firstName');
   localStorage.removeItem('surname');
+  localStorage.removeItem('currentLevel');
+  localStorage.removeItem('currentRoundNum');
   clearHintsState();
   initialRender();
 };

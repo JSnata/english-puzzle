@@ -30,6 +30,36 @@ const resultAudioClickHandler = (e: Event) => {
   }
 };
 
+interface Options {
+  data: number[];
+  title: string;
+  class: string;
+}
+
+const renderWords = (options: Options) => {
+  const resultContainer = document.querySelector('.result-container') as HTMLElement;
+
+  if (options.data.length) {
+    const wrapper = renderElement('div', `results-list-wrapper ${options.class}`, resultContainer);
+    renderElement('h2', 'heading-secondary', wrapper, {
+      innerText: options.title,
+    });
+    const list = renderElement('ul', 'sentences-list', wrapper);
+    options.data.forEach((sentence) => {
+      const text = state.levelData?.rounds[state.currentRoundNum].words[sentence].textExample;
+      if (text) {
+        const item = renderElement('li', 'item', list);
+        const audioButton = renderElement('button', 'primary-button audio-hint-button', item);
+        audioButton.dataset.audioTarget = `${sentence}`;
+        audioButton.addEventListener('click', (e) => resultAudioClickHandler(e));
+        renderElement('p', 'sentence-item', item, {
+          innerText: text,
+        });
+      }
+    });
+  }
+};
+
 export const renderResultsPage = () => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
   mainContainer.innerHTML = '';
@@ -56,42 +86,8 @@ export const renderResultsPage = () => {
   }) as HTMLSourceElement;
   audioElementSource.src = baseUrl;
 
-  if (state.unknownSentences.length) {
-    const unKnownSentencesWrapper = renderElement('ul', 'unknown-sentences-wrapper', resultContainer);
-    renderElement('h2', 'heading-secondary --unknown-words', unKnownSentencesWrapper, {
-      innerText: "I don't know",
-    });
-    state.unknownSentences.forEach((sentence) => {
-      const text = state.levelData?.rounds[state.currentRoundNum].words[sentence].textExample;
-      if (text) {
-        const item = renderElement('li', 'item', unKnownSentencesWrapper);
-        const audioButton = renderElement('button', 'primary-button audio-hint-button', item);
-        audioButton.dataset.audioTarget = `${sentence}`;
-        audioButton.addEventListener('click', (e) => resultAudioClickHandler(e));
-        renderElement('p', 'unknown-sentence', item, {
-          innerText: text,
-        });
-      }
-    });
-  }
-  if (state.knownSentences.length) {
-    const knownSentencesWrapper = renderElement('ul', 'known-words', resultContainer);
-    renderElement('h2', 'heading-secondary --known-words', knownSentencesWrapper, {
-      innerText: 'I know',
-    });
-    state.knownSentences.forEach((sentence) => {
-      const text = state.levelData?.rounds[state.currentRoundNum].words[sentence].textExample;
-      if (text) {
-        const item = renderElement('li', 'item', knownSentencesWrapper);
-        const audioButton = renderElement('button', 'primary-button audio-hint-button', item);
-        audioButton.dataset.audioTarget = `${sentence}`;
-        audioButton.addEventListener('click', (e) => resultAudioClickHandler(e));
-        renderElement('p', 'known-sentence', item, {
-          innerText: text,
-        });
-      }
-    });
-  }
+  renderWords({ data: state.knownSentences, title: 'I know', class: '-known' });
+  renderWords({ data: state.unknownSentences, title: "I don't know", class: '-unknown' });
 
   const continueGameButton = renderElement('button', 'primary-button continue-game-button', resultContainer, {
     innerText: 'Continue game',

@@ -3,10 +3,10 @@ import { renderElement } from './renderElement';
 import { renderGamePage } from './gamePage/gamePage';
 import { logout, getGameProgress } from '../utils/localStorageUtils';
 
-const renderProgressMessage = () => {
+const renderProgressMessage = (level: string, round: number) => {
   const header = document.querySelector('.main-header') as HTMLElement;
   const node = renderElement('div', 'progress-message', header, {
-    innerText: `The came is continue at ${state.currentLevel} level and ${state.currentRoundNum} round`,
+    innerText: `The came is continue at ${level} level and ${round} round`,
   });
 
   setTimeout(() => {
@@ -21,7 +21,7 @@ const startGameHandler = () => {
   renderGamePage(currentLevel, 0, Number(currentRoundNum));
 
   if (getGameProgress('currentLevel')) {
-    renderProgressMessage();
+    renderProgressMessage(currentLevel, +currentRoundNum + 1);
   }
 };
 

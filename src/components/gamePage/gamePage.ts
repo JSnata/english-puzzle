@@ -157,7 +157,6 @@ export const setAudioHintContent = () => {
 
 const continueButtonClickHandler = () => {
   const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
-  // const resultsButton = document.querySelector('.results-button') as HTMLButtonElement;
   const resultRow = document.querySelector(`[data-sentence="${state.currentSentenceNum}"]`) as HTMLElement;
   Array.from(resultRow.children).forEach((childElement) => {
     childElement.classList.remove('correct');
@@ -165,7 +164,7 @@ const continueButtonClickHandler = () => {
   });
   checkButton.disabled = true;
 
-  if (state.currentSentenceNum < 1) {
+  if (state.currentSentenceNum < 9) {
     state.currentSentenceNum += 1;
   } else {
     const resultBlock = document.querySelector('.result-field') as HTMLElement;
@@ -222,7 +221,9 @@ const autoCompleteButtonClickHandler = () => {
     }
   });
 
-  state.unknownSentences.push(state.currentSentenceNum);
+  if (!state.unknownSentences.includes(state.currentSentenceNum)) {
+    state.unknownSentences.push(state.currentSentenceNum);
+  }
   isAnswerAccurate(state.currentSentenceNum);
   showHintContent('text', true);
   showHintContent('audio', true);

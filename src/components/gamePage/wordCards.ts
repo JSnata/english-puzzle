@@ -38,7 +38,7 @@ export const isAnswerAccurate = (sentence: number) => {
 
       showHintContent('text', false);
       showHintContent('audio', false);
-      if (state.resultArr.length === 2) {
+      if (state.resultArr.length === 10) {
         resultsButton.style.display = 'inline-block';
         resultsButton.disabled = false;
       }
