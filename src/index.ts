@@ -1,5 +1,6 @@
 import App from './components/app/app';
-import './global.css';
-import './normalize.css';
+import './css/global.css';
+import './css/normalize.css';
+import './css/buttons.css';
 
 App();

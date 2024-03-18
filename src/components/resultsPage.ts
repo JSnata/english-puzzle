@@ -17,7 +17,7 @@ const continueGameButtonClickHandler = () => {
 export const renderResultsPage = () => {
   console.log(state);
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
-  mainContainer.innerHTML = 'Results Page';
+  mainContainer.innerHTML = '';
   const resultContainer = renderElement('div', 'result-container', mainContainer);
   const unKnownSentencesWrapper = renderElement('div', 'unknown-sentences-wrapper', resultContainer);
   renderElement('h2', 'heading-secondary', unKnownSentencesWrapper, {

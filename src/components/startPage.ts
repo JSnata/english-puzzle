@@ -4,9 +4,9 @@ import { renderGamePage } from './gamePage/gamePage';
 import { logout, getGameProgress } from '../utils/localStorageUtils';
 
 const renderProgressMessage = () => {
-  const gameContainer = document.querySelector('.game-container') as HTMLElement;
-  const node = renderElement('div', 'source-container', gameContainer, {
-    innerText: '12312312312',
+  const header = document.querySelector('.main-header') as HTMLElement;
+  const node = renderElement('div', 'progress-message', header, {
+    innerText: `The came is continue at ${state.currentLevel} level and ${state.currentRoundNum} round`,
   });
 
   setTimeout(() => {
@@ -32,7 +32,7 @@ export const renderStartPage = (userCredentials: { firstName: string; surname: s
 
   const mainHeader = renderElement('div', 'header', mainContent);
   renderElement('h1', 'main-heading', mainHeader, {
-    innerText: 'RSS PUZZLE',
+    innerText: 'ENGLISH PUZZLE',
   });
   const descriptionContainer = renderElement('div', 'game-description', mainHeader);
 
@@ -47,12 +47,15 @@ export const renderStartPage = (userCredentials: { firstName: string; surname: s
     });
   }
   renderElement('div', '', mainContent);
-  const startGameButton = renderElement('button', 'primary-button', greetingContainer, {
+
+  const actionsWrapper = renderElement('div', 'actions-wrapper', greetingContainer);
+
+  const startGameButton = renderElement('button', 'secondary-button -xl', actionsWrapper, {
     innerText: 'Start',
     type: 'button',
   });
   startGameButton?.addEventListener('click', () => startGameHandler());
-  const logoutButton = renderElement('button', 'primary-button logout-button', greetingContainer, {
+  const logoutButton = renderElement('button', 'primary-button -xl logout-button', actionsWrapper, {
     type: 'button',
     innerText: 'Logout',
   });

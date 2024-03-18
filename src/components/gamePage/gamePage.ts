@@ -74,8 +74,9 @@ export const showHintContent = (type: 'text' | 'audio', flag: boolean) => {
 
 export const renderHints = () => {
   const gameContainer = document.querySelector('.game-container') as HTMLElement;
+  const header = document.querySelector('.main-header') as HTMLElement;
   const hintsContainer = renderElement('div', 'hints-content-block', gameContainer);
-  const hintsActionsContainer = renderElement('div', 'hint-actions-container', gameContainer);
+  const hintsActionsContainer = renderElement('div', 'hint-actions-container', header);
   const textHintWrapper = renderElement('div', 'text-hint-wrapper', hintsActionsContainer);
   const audioHintWrapper = renderElement('div', 'audio-hint-wrapper', hintsActionsContainer);
 
@@ -95,9 +96,11 @@ export const renderHints = () => {
       innerText: '?',
     }
   ) as HTMLButtonElement;
-  const audioHint = renderElement('button', `audio-hint-button ${state.isHintAudio ? '' : 'hidden'}`, hintsContainer, {
-    innerText: '🎵',
-  });
+  const audioHint = renderElement(
+    'button',
+    `primary-button audio-hint-button ${state.isHintAudio ? '' : 'hidden'}`,
+    hintsContainer
+  );
   const audioElement = renderElement('audio', '', audioHintWrapper, {
     id: 'audioPlayer',
   });
@@ -115,11 +118,14 @@ export const renderHints = () => {
 
   audioHint.addEventListener('click', () => {
     const audioPlayer = document.getElementById('audioPlayer') as HTMLAudioElement;
-    const source = audioPlayer.querySelector('source') as HTMLSourceElement;
-    console.log(audioPlayer);
-    console.log(source.src);
 
-    audioPlayer.play();
+    audioPlayer.play().then(() => {
+      audioHint.classList.add('-active');
+    });
+
+    audioPlayer.onended = () => {
+      audioHint.classList.remove('-active');
+    };
   });
 
   textHintIcon.addEventListener('click', () => {
@@ -229,6 +235,7 @@ const resultsButtonClickHandler = () => {
 
 const renderActions = () => {
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
+  mainContainer.classList.add('-game');
   const actionsContainer = renderElement('div', 'actions-container', mainContainer);
   const autoCompleteButton = renderElement('button', 'primary-button auto-complete-button', actionsContainer, {
     innerText: 'Auto-Complete',
@@ -257,10 +264,17 @@ const renderActions = () => {
 };
 
 export const renderGamePage = async (level = '1', sentence = 0, round = 0) => {
+  const body = document.querySelector('body') as HTMLElement;
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
+  const header = document.querySelector('.main-header') as HTMLElement;
+
+  if (header) {
+    header.remove();
+  }
+
   mainContainer.innerHTML = '';
-  const mainHeader = renderElement('div', 'main-header', mainContainer);
-  const logoutButton = renderElement('button', 'primary-button logout-button', mainHeader, {
+  const mainHeader = renderElement('div', 'main-header', body);
+  const logoutButton = renderElement('button', 'secondary-button logout-button', mainHeader, {
     type: 'button',
     innerText: 'Logout',
   });

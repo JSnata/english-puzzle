@@ -4,7 +4,7 @@ import { renderGamePage } from './gamePage/gamePage';
 import { renderElement } from './renderElement';
 
 export const renderStartGameMenu = () => {
-  const mainContainer = document.querySelector('.hint-actions-container') as HTMLElement;
+  const mainContainer = document.querySelector('.main-container') as HTMLElement;
   const levels = 6;
   const rounds = state.roundsCounter;
 
