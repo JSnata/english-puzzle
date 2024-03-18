@@ -4,6 +4,7 @@ import { renderGamePage } from './gamePage/gamePage';
 import { renderElement } from './renderElement';
 
 const baseUrl = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/';
+const baseImageUrl = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/images/';
 
 const continueGameButtonClickHandler = () => {
   state.currentRoundNum += 1;
@@ -30,10 +31,22 @@ const resultAudioClickHandler = (e: Event) => {
 };
 
 export const renderResultsPage = () => {
-  console.log(state);
   const mainContainer = document.querySelector('.main-container') as HTMLElement;
   mainContainer.innerHTML = '';
   const resultContainer = renderElement('div', 'result-container', mainContainer);
+  const artworkData = state.levelData?.rounds[state.currentRoundNum].levelData;
+  if (artworkData) {
+    const artworkContainer = renderElement('div', 'artwork-wrapper', resultContainer);
+    renderElement('p', 'artwork-name', artworkContainer, {
+      innerText: '' + state.levelData?.rounds[state.currentRoundNum].levelData.name,
+    });
+    renderElement('p', 'artwork-author', artworkContainer, {
+      innerText: `${artworkData.author} (${artworkData.year})`,
+    });
+    renderElement('img', 'artwork-img', artworkContainer, {
+      src: baseImageUrl + state.levelData?.rounds[state.currentRoundNum].levelData.cutSrc,
+    });
+  }
   const audioElement = renderElement('audio', '', mainContainer, {
     id: 'audioPlayer',
   });
@@ -45,7 +58,7 @@ export const renderResultsPage = () => {
 
   if (state.unknownSentences.length) {
     const unKnownSentencesWrapper = renderElement('ul', 'unknown-sentences-wrapper', resultContainer);
-    renderElement('h2', 'heading-secondary', unKnownSentencesWrapper, {
+    renderElement('h2', 'heading-secondary --unknown-words', unKnownSentencesWrapper, {
       innerText: "I don't know",
     });
     state.unknownSentences.forEach((sentence) => {
@@ -62,8 +75,8 @@ export const renderResultsPage = () => {
     });
   }
   if (state.knownSentences.length) {
-    const knownSentencesWrapper = renderElement('div', 'known-words', resultContainer);
-    renderElement('h2', 'heading-secondary', knownSentencesWrapper, {
+    const knownSentencesWrapper = renderElement('ul', 'known-words', resultContainer);
+    renderElement('h2', 'heading-secondary --known-words', knownSentencesWrapper, {
       innerText: 'I know',
     });
     state.knownSentences.forEach((sentence) => {

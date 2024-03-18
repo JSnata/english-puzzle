@@ -1,5 +1,4 @@
 import { renderResultsPage } from './../resultsPage';
-// import { GameData } from './../../types/interfaces';
 import { shuffleArray } from '../../utils/arrayUtils';
 import { logout, setHintState, saveGameProgress } from '../../utils/localStorageUtils';
 import { getWordCards, isAnswerAccurate, renderSourceCards } from './wordCards';
