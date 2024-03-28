@@ -3,6 +3,9 @@ import { State } from '../../types/interfaces';
 import { getHintState } from '../../utils/localStorageUtils';
 
 export const state: State = {
+  sentencesInField: 9,
+  baseImageUrl: 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/images/',
+  baseUrl: 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/',
   levelData: null,
   roundSentences: null,
   currentTranslation: '',

@@ -1,4 +1,3 @@
-// import { GameData } from './../types/interfaces';
 import { state } from './app/app';
 import { renderGamePage } from './gamePage/gamePage';
 import { renderElement } from './renderElement';

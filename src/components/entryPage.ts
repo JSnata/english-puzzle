@@ -6,12 +6,12 @@ const validateLoginForm = (
   input: HTMLInputElement,
   errorContainer: HTMLDivElement
 ) => {
-  const сharRestricRegex = /^[a-zA-Z-]+$/;
+  const сharRestrictRegex = /^[a-zA-Z-]+$/;
   const firstLetterUppercaseRegex = /^[A-Z].*$/;
   const firstNameMinLengthRegex = /^.{3,}$/;
   const surnameMinLengthRegex = /^.{4,}$/;
 
-  if (!сharRestricRegex.test(input.value)) {
+  if (!сharRestrictRegex.test(input.value)) {
     errorContainer.textContent = `${inputName} must contain only English alphabet letters and hyphen`;
     input.classList.add('error');
     return false;

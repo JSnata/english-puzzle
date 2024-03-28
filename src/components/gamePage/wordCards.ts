@@ -13,8 +13,7 @@ export const getWordCards = async (level: string): Promise<GameData | void> => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Ошибка:', error);
   }
@@ -24,7 +23,6 @@ export const isAnswerAccurate = (sentence: number) => {
   const continueButton = document.querySelector('.continue-button') as HTMLButtonElement;
   const checkButton = document.querySelector('.check-button') as HTMLButtonElement;
   const resultsButton = document.querySelector('.results-button') as HTMLButtonElement;
-  // const hintIcon = document.querySelector('.translation-container .icon') as HTMLElement;
 
   if (continueButton) {
     if (state.answerArr && arraysAreEqual(state.answerArr, state.resultArr[sentence])) {

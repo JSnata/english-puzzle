@@ -1,4 +1,4 @@
-import { renderResultsPage } from './../resultsPage';
+import { renderResultsPage } from '../resultsPage';
 import { shuffleArray } from '../../utils/arrayUtils';
 import { logout, setHintState, saveGameProgress } from '../../utils/localStorageUtils';
 import { getWordCards, isAnswerAccurate, renderSourceCards } from './wordCards';
@@ -6,8 +6,6 @@ import { renderResultField, renderResultRow } from './resultField';
 import { renderElement } from '../renderElement';
 import { state } from '../app/app';
 import { renderStartGameMenu } from '../gameMenu';
-
-const baseUrl = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/';
 
 export const manageWordsState = (level: string, sentence: number, round: number) => {
   if (state.levelData) {
@@ -106,7 +104,7 @@ export const renderHints = () => {
   const audioElementSource = renderElement('source', '', audioElement, {
     type: 'audio/mp3',
   }) as HTMLSourceElement;
-  audioElementSource.src = baseUrl + state.currentAudio;
+  audioElementSource.src = state.baseUrl + state.currentAudio;
 
   const audioHintIcon = renderElement('span', `audio-icon ${state.isHintAudio ? '' : 'disabled'}`, audioHintWrapper, {
     innerText: 'Audio',
@@ -151,7 +149,7 @@ export const setTextHintContent = () => {
 export const setAudioHintContent = () => {
   const audioPlayer = document.getElementById('audioPlayer') as HTMLAudioElement;
   const sourceElement = document.querySelector('#audioPlayer source') as HTMLSourceElement;
-  sourceElement.src = baseUrl + state.currentAudio;
+  sourceElement.src = state.baseUrl + state.currentAudio;
   audioPlayer.load();
 };
 
@@ -164,7 +162,7 @@ const continueButtonClickHandler = () => {
   });
   checkButton.disabled = true;
 
-  if (state.currentSentenceNum < 9) {
+  if (state.currentSentenceNum < state.sentencesInField) {
     state.currentSentenceNum += 1;
   } else {
     const resultBlock = document.querySelector('.result-field') as HTMLElement;

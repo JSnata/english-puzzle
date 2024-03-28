@@ -3,9 +3,6 @@ import { state } from './app/app';
 import { renderGamePage } from './gamePage/gamePage';
 import { renderElement } from './renderElement';
 
-const baseUrl = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/';
-const baseImageUrl = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/images/';
-
 const continueGameButtonClickHandler = () => {
   state.currentRoundNum += 1;
   state.currentSentenceNum = 0;
@@ -23,8 +20,8 @@ const resultAudioClickHandler = (e: Event) => {
   const audioPlayer = document.getElementById('audioPlayer') as HTMLAudioElement;
   const audioPlayerSource = document.getElementById('audioPlayerSource') as HTMLAudioElement;
   if (sentence) {
-    audioPlayerSource.src = baseUrl + state.levelData?.rounds[state.currentRoundNum].words[+sentence].audioExample;
-    console.log(audioPlayerSource.src);
+    audioPlayerSource.src =
+      state.baseUrl + state.levelData?.rounds[state.currentRoundNum].words[+sentence].audioExample;
     audioPlayer.load();
     audioPlayer.play();
   }
@@ -74,7 +71,7 @@ export const renderResultsPage = () => {
       innerText: `${artworkData.author} (${artworkData.year})`,
     });
     renderElement('img', 'artwork-img', artworkContainer, {
-      src: baseImageUrl + state.levelData?.rounds[state.currentRoundNum].levelData.cutSrc,
+      src: state.baseImageUrl + state.levelData?.rounds[state.currentRoundNum].levelData.cutSrc,
     });
   }
   const audioElement = renderElement('audio', '', mainContainer, {
@@ -84,7 +81,7 @@ export const renderResultsPage = () => {
     type: 'audio/mp3',
     id: 'audioPlayerSource',
   }) as HTMLSourceElement;
-  audioElementSource.src = baseUrl;
+  audioElementSource.src = state.baseUrl;
 
   renderWords({ data: state.knownSentences, title: 'I know', class: '-known' });
   renderWords({ data: state.unknownSentences, title: "I don't know", class: '-unknown' });

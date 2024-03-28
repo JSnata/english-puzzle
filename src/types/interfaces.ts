@@ -1,4 +1,7 @@
 export interface State {
+  sentencesInField: number;
+  baseImageUrl: string;
+  baseUrl: string;
   levelData: null | GameData;
   roundSentences: null | Word[];
   currentTranslation: string;
