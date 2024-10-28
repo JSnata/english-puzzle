@@ -16,3 +16,11 @@ You can [play the game here](https://rolling-scopes-school.github.io/jsnata-JSFE
 
 - **Word Collection**: Contains 3600 English words organized by difficulty, providing a scalable learning experience.
 - **Audio Files**: Pronunciation audio files are available, offering spoken feedback for words and sentences.
+
+## Technologies Used
+
+- **TypeScript**
+- **HTML/CSS**
+- **Local Storage**
+- **Audio API**
+- **Webpack**
