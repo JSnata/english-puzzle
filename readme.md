@@ -1,8 +1,8 @@
-# RSS Puzzle
+# English Puzzle
 
 You can [play the game here](https://rolling-scopes-school.github.io/jsnata-JSFE2023Q4/rss-puzzle/index.html)!
 
-🌟 **RSS Puzzle** is an interactive mini-game designed to enhance English language skills. Inspired by Lingualeo's Phrase Constructor training, players arrange jumbled words into correct sentences. The game offers a unique puzzle experience with multiple difficulty levels, hints, and artwork to keep players engaged.
+🌟 **English Puzzle** is an interactive mini-game designed to enhance English language skills. Inspired by Lingualeo's Phrase Constructor training, players arrange jumbled words into correct sentences. The game offers a unique puzzle experience with multiple difficulty levels, hints, and artwork to keep players engaged.
 
 ## Gameplay Workflow 🎮
 
